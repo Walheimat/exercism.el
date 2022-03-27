@@ -1,0 +1,78 @@
+* exercism.el
+
+This package provides convenience functions to download, open and
+submit [[https://exercism.org/][Exercism]] exercises using the =exercism= binary.
+
+*Note*: You currently need to download and configure the binary
+yourself. See [[https://exercism.org/docs/using/solving-exercises/working-locally][the official instructions]].
+
+** Functions
+
+The package provides the following interactive functions:
+
+*** =exercism-download=
+
+Tries to download an exercise by name and track.
+
+If called from within an exercism buffer, that exercise's track is the
+initial input.
+
+If the download succeeds, you can open a dired buffer of the location
+using =exercism-dired-recent=.
+
+*** =exercism-dired-recent=
+
+Open the directory of the last downloaded exercise.
+
+This is not persisted, so only works in the scope of the current
+session.
+
+*** =exercism-submit=
+
+Submits the solution of the current exercise.
+
+This function needs to be called in the context of an exercism
+exercise buffer.
+
+*** =exercism-open=
+
+Open the current exercise in the browser.
+
+** Customization
+
+If the =exercism= binary is not in your =exec-path= or has a different
+name, set =exercism-bin=.
+
+This package comes with a key map. You will need to set
+=exercism-prefix= to your desired key sequence. If you additionally set
+=exercism-bind-command-map= to =t=, it will be automatically bound to that
+prefix in the global map.
+
+** Installation
+
+I don't intend to make this package available anywhere as I doubt it's
+useful to other people.
+
+To install, clone the project and make sure the target directory is in
+your =load-path=.
+
+*** Example configuration
+
+#+begin_src emacs-lisp
+;; Using `use-package' macro:
+(use-package exercism
+  :custom
+  (exercism-prefix (kbd "C-c e"))
+  (exercism-bind-command-map t)
+  :load-path "<project-path>"           ; Replace.
+  :demand
+  :ensure nil)
+
+;; Otherwise:
+(add-to-list 'load-path "<project-path>")
+(setq exercism-prefix           (kbd ("C-c e"))
+      exercism-bind-command-map t)
+(require 'exercism)
+#+end_src
+
+#+options: toc:nil
